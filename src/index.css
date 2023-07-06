@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Roboto+Condensed:wght@400;700&display=swap');
+
+body {
+  background: #f0f4f8;
+  font-family: 'Cabin', Sans-Serif;
+  font-weight: 400;
+  line-height: 1.75;
+  color: #102a43;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.Toastify__toast {
+  text-transform: capitalize;
+}
