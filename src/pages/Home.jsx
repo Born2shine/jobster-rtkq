@@ -13,7 +13,7 @@ const Home = () => {
         <section className="lg:grid lg:grid-cols-2 lg:items-center">
           <aside>
             <h1 className="font-extrabold text-3xl font-headingFont md:text-[2.5rem lg:text-4xl">Job <span className="text-primary500 leading-[1.3]"> Tracking </span> App </h1>
-            <div className="text-justif w-[41ch] my-6 text-gray-600 md:w-[48ch]">
+            <div className="text-justif w-[23em] my-6 text-gray-600 md:w-[48ch]">
               Crucifix narwhal street art asymmetrical, humblebrag tote bag pop-up fixie raclette taxidermy craft beer. Brunch bitters synth, VHS crucifix heirloom meggings bicycle rights.
             </div>
             <Link to='/login' className="bg-primary500 p-[.72rem] px-6 rounded-r25 shadow-shadow3 text-isWhite transition-all duration-500 ease-in-out hover:bg-primary700 font-bold tracking-wider text-md">Login/Register</Link>
