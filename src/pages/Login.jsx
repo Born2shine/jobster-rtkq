@@ -4,7 +4,7 @@ import { AuthenticationWrapper } from '../components'
 import { flashMessage as flash} from '../utils/helpers/flashMessage'
 
 const Login = () => {
-    flash('error', 'success loading..')
+    // flash('error', 'success loading..')
     return (
         <AuthenticationWrapper>
             <div>
