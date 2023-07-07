@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
 
   return (
-    <section className='h-screen w-screen overflow-y-scroll'>
+    <section className='h-screen w-screen overflow-hidden'>
       <Routes>
         <Route index path='/' element={<Home/>} />
         <Route index path='/login' element={<Login/>} />

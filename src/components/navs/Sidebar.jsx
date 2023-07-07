@@ -13,7 +13,7 @@ const Sidebar = () => {
     const activeLink = defaultLink + ' text-primary500'
 
     return (
-        <aside className={`hidden py-5 bg-isWhite  md:block ${!showSidebar && width >= 768 ? 'px-0 md:w-0' : 'md:w-[25%]'} h-screen transition-all ease-out duration-500`}>
+        <aside className={`hidden py-5 bg-isWhite  md:block ${!showSidebar && width >= 768 ? 'px-0 md:w-0' : 'lg:w-[23%]'} h-screen transition-all ease-out duration-500`}>
             <img className='px-10' src={LOGO} alt="logo" />
             <section className={`border- ${!showSidebar && width >= 768 ? 'hidden' : ''}`}>
                 <div className='mt-10'>
