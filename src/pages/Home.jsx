@@ -3,7 +3,7 @@ import { LOGO, MAIN_IMG } from "../assets"
 
 const Home = () => {
   return (
-    <section className='px-5 md:px-10 lg:px-4 lg:w-[90%] lg:mx-auto'>
+    <section className='px-5 md:px-10 lg:px-4 lg:w-[85%] lg:mx-auto'>
       <header className="pt-6">
         <nav>
           <img src={LOGO} alt="" />

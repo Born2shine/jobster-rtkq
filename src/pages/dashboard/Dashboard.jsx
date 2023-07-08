@@ -1,12 +1,6 @@
-import { useWindowSize } from "@react-hookz/web/esm/useWindowSize";
-import { useDispatch, useSelector } from "react-redux";
-import { Barchart, MobileNav, Sidebar, Stats, Topnav } from "../../components";
-import defaultStats from "../../utils/data/stats";
+import { Barchart, Stats } from "../../components";
 
 const Dashboard = () => {
-  const { showSidebar, showLogoutBtn } = useSelector((state) => state.slug);
-  const dispatch = useDispatch();
-  const { width } = useWindowSize();
 
   return (
     <section>

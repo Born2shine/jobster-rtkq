@@ -5,6 +5,8 @@ import { default as Topnav } from "./navs/Topnav";
 import { default as Stats } from "./metrics/Stats";
 import { default as Barchart } from "./charts/Barchart";
 import { default as HeroContainer } from "./wrapper/HeroContainer";
+import { default as PaginateBtn } from "./pagination/PaginateBtn";
+import { PrevIcon, NextIcon } from "./icons";
 
 export {
     AuthenticationWrapper,
@@ -13,5 +15,8 @@ export {
     Topnav,
     Stats,
     Barchart,
-    HeroContainer
+    HeroContainer,
+    PrevIcon,
+    NextIcon,
+    PaginateBtn
 }

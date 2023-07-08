@@ -1,10 +1,15 @@
 import React from "react";
-import { HeroContainer } from "../../components";
+import {
+  HeroContainer,
+  NextIcon,
+  PaginateBtn,
+  PrevIcon,
+} from "../../components";
 
 const AllJobs = () => {
   return (
-    <section>
-      <HeroContainer title='Search Form'>
+    <section className="h-screen">
+      <HeroContainer title="Search Form">
         <section className="mt-5">
           <form action="">
             <div className="grid gap-y-3.5 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
@@ -72,37 +77,121 @@ const AllJobs = () => {
           </form>
         </section>
       </HeroContainer>
-      <section className="mt-16">
-        <h3 className="text-gray-800 font-semibold text-xl tracking-wider mb-5">75 Jobs Found</h3>
+      <section className="mt-16 pb-10 md:pb-40">
+        <h3 className="text-gray-800 font-semibold text-xl tracking-wider mb-5">
+          75 Jobs Found
+        </h3>
         <section>
-          <div className="bg-isWhite shadow-shadow2 text-gray-600 rounded-r25 ">
-            <div className="pb-4">
-              <div className="flex items-center gap-8 border-b px-6 py-4">
-                <span className="p-4 px-6 grid place-content-end w-fit bg-primary500 font-semibold text-isWhite text-2xl rounded-r25">B</span>
-                <div>
-                  <h1 className="text-gray-600 text-xl tracking-wide">Civil Engineer</h1>
-                  <span className="text-gray-400 tracking-wider">Bechtelar-Bednar</span>
+          <article className="grid gap-4 md:grid-cols-2">
+            {[2, 3, 4, 5, 6, 7].map((i, idx) => (
+              <div
+                key={idx}
+                className="bg-isWhite shadow-shadow2 text-gray-600 rounded-r25 pb-4"
+              >
+                <div className="pb-4">
+                  <div className="flex items-center gap-8 border-b px-6 py-4">
+                    <span className="p-4 px-6 grid place-content-end w-fit bg-primary500 font-semibold text-isWhite text-2xl rounded-r25">
+                      B
+                    </span>
+                    <div>
+                      <h1 className="text-gray-600 text-xl tracking-wide">
+                        Civil Engineer
+                      </h1>
+                      <span className="text-gray-400 tracking-wider">
+                        Bechtelar-Bednar
+                      </span>
+                    </div>
+                  </div>
+                  <div className="px-6 grid gap-4 pt-5 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                    <div className="flex items-center gap-4">
+                      <span className="text-gray-400">
+                        <svg
+                          stroke="currentColor"
+                          fill="currentColor"
+                          strokeWidth="0"
+                          viewBox="0 0 512 512"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
+                        </svg>
+                      </span>
+                      <span className="tracking-wider text-gray-700">
+                        Kiamba
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-gray-400">
+                        <svg
+                          stroke="currentColor"
+                          fill="currentColor"
+                          strokeWidth="0"
+                          viewBox="0 0 512 512"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
+                        </svg>
+                      </span>
+                      <span className="tracking-wider text-gray-700">
+                        Dec 27th, 2021
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <div className="flex items-center gap-4">
+                        <span className="text-gray-400">
+                          <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            strokeWidth="0"
+                            viewBox="0 0 512 512"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
+                          </svg>
+                        </span>
+                        <span className="tracking-wider text-gray-700">
+                          Internship
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <span className="tracking-wider bg-red-100 text-red-400 px-4 rounded-r25">
+                        Declined
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-6 pt-1">
+                  <div className="flex gap-2">
+                    <button className="tracking-wider bg-green-200 text-green-800 px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3">
+                      Edit
+                    </button>
+                    <button className="tracking-wider bg-isRedLight text-isRedDark px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3">
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="px-6 flex flex-col gap-2 pt-6">
-                <div className="flex items-center gap-4">
-                  <span className="text-gray-400"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path></svg></span>
-                  <span className="tracking-wider text-gray-700">Kiamba</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-gray-400"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path></svg></span>
-                  <span className="tracking-wider text-gray-700">Internship</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-4">
-                    <span className="text-gray-400"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path></svg></span>
-                    <span className="tracking-wider text-gray-700">Dec 27th, 2021</span>
-                  </div>
-                  <div className="flex gap-4">
-                    <span className="tracking-wider bg-red-100 text-red-400 px-5 rounded-r25">Declined</span>
-                  </div>
-                </div>
+            ))}
+          </article>
+          <div className="mt-7">
+            <div className="flex flex-col items-end gap-4 lg:flex-row lg:justify-end">
+              <PaginateBtn title="Prev" icon={<PrevIcon />} />
+              <div className="bg-primary100 rounded-r25">
+				<div className="flex text-primary500">
+					{[1, 2, 3, 4, 5, 6, 7, 8].map((i, idx) => (
+					<span key={idx} className={`block w-fit font-semibold text-xl p-2 px-5 rounded-r25 cursor-pointer ${idx === 0 && 'bg-primary500 text-isWhite'}`}>
+						{idx + 1}
+					</span>
+					))}
+				</div>
               </div>
+              <PaginateBtn title="Next" icon={<NextIcon />} />
             </div>
           </div>
         </section>
