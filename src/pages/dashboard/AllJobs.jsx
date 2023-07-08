@@ -179,7 +179,7 @@ const AllJobs = () => {
               </div>
             ))}
           </article>
-          <div className="mt-7">
+          <div className="mt-16">
             <div className="flex flex-col items-end gap-4 lg:flex-row lg:justify-end">
               <PaginateBtn title="Prev" icon={<PrevIcon />} />
               <div className="bg-primary100 rounded-r25">
