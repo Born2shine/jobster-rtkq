@@ -185,7 +185,7 @@ const AllJobs = () => {
               <div className="bg-primary100 rounded-r25">
 				<div className="flex text-primary500">
 					{[1, 2, 3, 4, 5, 6, 7, 8].map((i, idx) => (
-					<span key={idx} className={`block w-fit font-semibold text-xl p-2 px-5 rounded-r25 cursor-pointer ${idx === 0 && 'bg-primary500 text-isWhite'}`}>
+					<span key={idx} className={`block w-fit font-semibold text-xl py-1.5 px-5 rounded-r25 cursor-pointer ${idx === 0 && 'bg-primary500 text-isWhite'}`}>
 						{idx + 1}
 					</span>
 					))}
