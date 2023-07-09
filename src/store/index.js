@@ -1,12 +1,13 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import slugReducer from '../features/slugSlice'
-import { jobsApi } from '../services/jobsApi'
+import { authApi, jobsApi } from '../services'
 
 export const store = configureStore({
     reducer: {
         [jobsApi.reducerPath]: jobsApi.reducer,
+        [authApi.reducerPath]: authApi.reducer,
         slug: slugReducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(jobsApi.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(jobsApi.middleware, authApi.middleware)
 })
 

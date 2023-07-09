@@ -1,28 +1,106 @@
-import React from 'react'
-import { LOGO } from '../assets'
-import { Link } from 'react-router-dom'
-import { AuthenticationWrapper } from '../components'
+import { useFormik } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthenticationWrapper } from '../components';
+import { useRegisterUserMutation } from '../services';
+import { flashMessage as flash } from '../utils/helpers/flashMessage';
+import useSessionStorage from '../utils/hooks/useSessionStorage';
+import { registerSchema } from '../utils/schema';
 
 const Register = () => {
+    const { setSessionStorageItem } = useSessionStorage()
+    // setSessionStorageItem('user', JSON.parse('payload'))
+    const [registerUser, { error, isError, isLoading, isSuccess }] = useRegisterUserMutation()
+    const navigate = useNavigate()
+
+    const createUser = async (values) => {
+        try {
+            await registerUser(values)
+                .unwrap()
+                .then((payload) => {
+                    // const { user: { name, email, token } } = payload
+                    setSessionStorageItem('user', payload)
+                    flash('success', `Hello there! ${payload.user.name}`)
+                    navigate('/dashboard')
+                })
+                .catch((error) => error.data && flash('error', error.data.msg))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            password: '',
+        },
+        validationSchema: registerSchema,
+        onSubmit: createUser
+    })
+
+
     return (
-        <AuthenticationWrapper>
+        <AuthenticationWrapper title='Register'>
             <div>
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="name" className='text-gray-800 tracking-wider block'>Name</label>
-                        <input type="text" placeholder='' className='bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]' />
+                        <input
+                            type="text"
+                            name='name'
+                            value={values.name}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            className={`bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]
+                            ${errors.name && touched.name && 'border-red-500'}
+                            `}
+                        />
+                        {errors.name && touched.name && <span className='text-red-500 text-xs block mt-[0.15rem] tracking-wider'>{errors.name}</span>}
                     </div>
                     <div className='mt-4'>
                         <label htmlFor="email" className='text-gray-800 tracking-wider block'>Email</label>
-                        <input type="text" placeholder='' className='bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]' />
+                        <input
+                            type="email"
+                            name='email'
+                            value={values.email}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            className={`bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]
+                            ${errors.email && touched.email && 'border-red-500'}
+                            `}
+                        />
+                        {errors.email && touched.email && <span className='text-red-500 text-xs block mt-[0.15rem] tracking-wider'>{errors.email}</span>}
                     </div>
                     <div className='mt-4'>
                         <label htmlFor="password" className='text-gray-800 tracking-wider block'>Password</label>
-                        <input type="text" placeholder='' className='bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]' />
+                        <input
+                            type="password"
+                            name='password'
+                            value={values.password}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            autoComplete=''
+                            className={`bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]
+                            ${errors.password && touched.password && 'border-red-500'}
+                            `}
+                        />
+                        {errors.password && touched.password && <span className='text-red-500 text-xs block mt-[0.15rem] tracking-wider'>{errors.password}</span>}
                     </div>
                     <div className='mt-10 mb-3'>
-                        <button className='p-1 w-full text-isWhite bg-primary500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-primary700 transition duration-500 ease-in-out'>Submit</button>
-                        <button className='p-1 mt-4 w-full text-primary500 bg-primary200 rounded-r25 shadow-shadow4 tracking-wider hover:bg-primary700 transition duration-500 ease-in-out hover:text-isGrey50'>Demo App</button>
+                        <button
+                            type='submit'
+                            className='p-1 w-full text-isWhite bg-primary500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-primary700 transition duration-500 ease-in-out'
+                            disabled={isLoading ? true : false}
+                        >
+                            {isLoading ? 'Loading...' : 'Submit'}
+                        </button>
+                        <button
+                            type='submit'
+                            className='p-1 mt-4 w-full text-primary500 bg-primary200 rounded-r25 shadow-shadow4 tracking-wider hover:bg-primary700 transition duration-500 ease-in-out hover:text-isGrey50'
+                            disabled={isLoading ? true : false}
+                        >
+                            {isLoading ? 'Loading...' : 'Demo App'}
+                        </button>
 
                         <p className='text-center mt-3 text-gray-800'>Already a member? <Link to='/login' className='text-primary500'>Login</Link></p>
                     </div>

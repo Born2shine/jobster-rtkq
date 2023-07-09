@@ -6,7 +6,7 @@ import { flashMessage as flash} from '../utils/helpers/flashMessage'
 const Login = () => {
     // flash('error', 'success loading..')
     return (
-        <AuthenticationWrapper>
+        <AuthenticationWrapper title='Login'>
             <div>
                 <form action="">
                     <div>

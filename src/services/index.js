@@ -1,5 +1,6 @@
-import { useGetAllJobsQuery } from "./jobsApi";
+import { jobsApi, useGetAllJobsQuery } from "./job/jobsApi";
+import { authApi, useRegisterUserMutation } from "./auth/authApi";
 
 export {
-    useGetAllJobsQuery
+    jobsApi, useGetAllJobsQuery, authApi, useRegisterUserMutation
 }
