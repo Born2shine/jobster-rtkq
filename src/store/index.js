@@ -1,9 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import slugReducer from '../features/slugSlice'
+import { jobsApi } from '../services/jobsApi'
 
 export const store = configureStore({
     reducer: {
-        'slug': slugReducer
-    }
+        [jobsApi.reducerPath]: jobsApi.reducer,
+        slug: slugReducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(jobsApi.middleware)
 })
 

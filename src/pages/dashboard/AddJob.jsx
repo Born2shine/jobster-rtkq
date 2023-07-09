@@ -3,7 +3,7 @@ import { HeroContainer } from '../../components'
 
 const AddJob = () => {
   return (
-	<section className="h-screen">
+    <section className="h-screen">
       <HeroContainer title="Add Job">
         <section className="mt-5">
           <form action="">
@@ -21,6 +21,33 @@ const AddJob = () => {
                   className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]"
                 />
               </div>
+              <div>
+                <label
+                  htmlFor="company"
+                  className="text-gray-800 tracking-wider block"
+                >
+                  Company
+                </label>
+                <input
+                  type="text"
+                  placeholder=""
+                  className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="job_location"
+                  className="text-gray-800 tracking-wider block"
+                >
+                  Job Location
+                </label>
+                <input
+                  type="text"
+                  placeholder=""
+                  value='vegan food truck'
+                  className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]"
+                />
+              </div>
               <div className="">
                 <label
                   htmlFor="status"
@@ -29,7 +56,6 @@ const AddJob = () => {
                   Status
                 </label>
                 <select className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.47rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]">
-                  <option value="all">all</option>
                   <option value="interview">interview</option>
                   <option value="declined">declined</option>
                   <option value="pending">pending</option>
@@ -40,32 +66,21 @@ const AddJob = () => {
                   htmlFor="status"
                   className="text-gray-800 tracking-wider block"
                 >
-                  Type
+                  Job Type
                 </label>
                 <select className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.47rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]">
-                  <option value="all">all</option>
                   <option value="interview">full-time</option>
                   <option value="part-time">part-time</option>
                   <option value="remote">remote</option>
                   <option value="internship">internship</option>
                 </select>
               </div>
-              <div className="">
-                <label
-                  htmlFor="status"
-                  className="text-gray-800 tracking-wider block"
-                >
-                  Sort
-                </label>
-                <select className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.47rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]">
-                  <option value="latest">latest</option>
-                  <option value="a-z">a-z</option>
-                  <option value="z-a">z-a</option>
-                </select>
-              </div>
-              <div className="">
-                <button className="p-[0.3rem] mt-3 w-full text-isRedDark bg-isRedLight rounded-r25 shadow-shadow3 tracking-wider hover:bg-isRedDark hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
-                  Clear Filters
+              <div className="grid grid-cols-2 gap-4 mt-4 md:mt-0">
+                <button className="p-[0.28rem] w-full h-fit text-isWhite bg-gray-500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-gray-800 hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
+                  Clear
+                </button>
+                <button className="p-[0.28rem] w-full h-fit text-isWhite bg-primary500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-primary800 hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
+                  Submit
                 </button>
               </div>
             </div>

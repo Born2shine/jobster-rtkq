@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { AddJob, AllJobs, Dashboard, Home, Login, Main, Register } from "./pages";
+import { AddJob, AllJobs, Dashboard, Error404, Home, Login, Main, Profile, Register } from "./pages";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,8 +15,9 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="all-jobs" element={<AllJobs />} />
           <Route path="add-job" element={<AddJob />} />
-          <Route path="profile" element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
+        <Route path="*" element={<Error404 />} />
       </Routes>
       <ToastContainer position="top-center" />
     </section>

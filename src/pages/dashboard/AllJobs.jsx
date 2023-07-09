@@ -69,7 +69,7 @@ const AllJobs = () => {
                 </select>
               </div>
               <div className="">
-                <button className="p-[0.3rem] mt-3 w-full text-isRedDark bg-isRedLight rounded-r25 shadow-shadow3 tracking-wider hover:bg-isRedDark hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
+                <button className="p-[0.27rem] mt-3 w-full text-isRedDark bg-isRedLight rounded-r25 shadow-shadow3 tracking-wider hover:bg-isRedDark hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
                   Clear Filters
                 </button>
               </div>
