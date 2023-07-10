@@ -1,14 +1,36 @@
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthenticationWrapper } from "../components";
-import { useRegisterUserMutation } from "../services";
+import { useLoginMutation, useRegisterUserMutation } from "../services";
 import { flashMessage as flash } from "../utils/helpers/flashMessage";
 import { registerSchema } from "../utils/schema";
 import { setSessionStorageItem } from "./../utils/helpers/storage";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const loginHandler = async (user) => {
+    await login(user)
+      .unwrap()
+      .then((payload) => {
+        const { user } = payload
+        dispatch(setUser(user))
+        setSessionStorageItem("user", user);
+        flash("success", `Welcome back ${user.name}`);
+        navigate("/dashboard");
+      })
+      .catch((error) => error.data && flash("error", error.data.msg));
+  }
+
+  const handleDemoLogin = (e) => {
+    e.preventDefault()
+    const user = {email: 'testUser@test.com', password: 'secret'} 
+    loginHandler(user)
+  }
 
   const createUser = async (values) => {
     await registerUser(values)
@@ -121,9 +143,10 @@ const Register = () => {
             <button
               type="submit"
               className="p-1 mt-4 w-full text-primary500 bg-primary200 rounded-r25 shadow-shadow4 tracking-wider hover:bg-primary700 transition duration-500 ease-in-out hover:text-isGrey50"
-              disabled={isLoading ? true : false}
+              disabled={isLoginLoading ? true : false}
+              onClick={handleDemoLogin}
             >
-              {isLoading ? "Loading..." : "Demo App"}
+              {isLoginLoading ? "Loading..." : "Demo App"}
             </button>
 
             <p className="text-center mt-3 text-gray-800">
