@@ -16,8 +16,8 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogin = async (values, { resetForm }) => {
-    await login(values)
+  const loginHandler = async (user) => {
+    await login(user)
       .unwrap()
       .then((payload) => {
         const { user } = payload
@@ -27,7 +27,15 @@ const Login = () => {
         navigate("/dashboard");
       })
       .catch((error) => error.data && flash("error", error.data.msg));
-  };
+  }
+
+  const handleLogin = (values, { resetForm }) => loginHandler(values);
+
+  const handleDemoLogin = (e) => {
+    e.preventDefault()
+    const user = {email: 'testUser@test.com', password: 'secret'} 
+    loginHandler(user)
+  }
 
   const { values, errors, handleBlur, touched, handleChange, handleSubmit } =
     useFormik({
@@ -107,6 +115,7 @@ const Login = () => {
               type="submit"
               className="p-1 mt-4 w-full text-primary500 bg-primary200 rounded-r25 shadow-shadow4 tracking-wider hover:bg-primary700 transition duration-500 ease-in-out hover:text-isGrey50"
               disabled={isLoading ? true : false}
+              onClick={handleDemoLogin}
             >
               {isLoading ? "Loading..." : "Demo App"}
             </button>
