@@ -6,6 +6,7 @@ import { flashMessage as flash } from "../utils/helpers/flashMessage";
 import { registerSchema } from "../utils/schema";
 import { setSessionStorageItem } from "./../utils/helpers/storage";
 import { useDispatch } from "react-redux";
+import { setUser } from "../features/authSlice";
 
 const Register = () => {
   const [registerUser, { isLoading }] = useRegisterUserMutation();
@@ -136,9 +137,9 @@ const Register = () => {
             <button
               type="submit"
               className="p-1 w-full text-isWhite bg-primary500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-primary700 transition duration-500 ease-in-out"
-              disabled={isLoading ? true : false}
+              disabled={isLoading || isLoginLoading ? true : false}
             >
-              {isLoading ? "Loading..." : "Submit"}
+              {isLoading || isLoginLoading ? "Loading..." : "Submit"}
             </button>
             <button
               type="submit"
