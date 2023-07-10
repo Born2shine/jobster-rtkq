@@ -10,3 +10,11 @@ export const loginSchema = yup.object().shape({
     email: yup.string().email().required('please enter email'),
     password: yup.string().required('please enter password'),
 })
+
+export const addJobSchema = yup.object().shape({
+    position: yup.string().required(),
+    company: yup.string().required(),
+    job_location: yup.string().required('job location is a required field'),
+    status: yup.string().required(),
+    job_type: yup.string().required('job type is a required field')
+})

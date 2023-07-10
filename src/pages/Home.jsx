@@ -3,8 +3,7 @@ import { LOGO, MAIN_IMG } from "../assets"
 import { useGetAllJobsQuery } from "../services"
 
 const Home = () => {
-  // const { data, error, isError } = useGetAllJobsQuery({status: 'all', jobType: 'all', sort: 'latest', page: 1});
-  // console.log(data)
+  
 
   return (
     <section className='px-5 md:px-10 lg:px-4 lg:w-[85%] lg:mx-auto'>
