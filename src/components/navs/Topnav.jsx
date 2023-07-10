@@ -1,28 +1,26 @@
-import { useWindowSize } from "@react-hookz/web";
 import React from "react";
 import { FaAlignLeft, FaCaretDown, FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LOGO } from "../../assets";
 import { toggleNavbar, toggleShowLogoutBtn } from "../../features/slugSlice";
-import {
-  clearSessionStorage,
-  getSessionStorageItem,
-} from "../../utils/helpers/storage";
 import { flashMessage as flash } from "../../utils/helpers/flashMessage";
+import {
+  clearSessionStorage
+} from "../../utils/helpers/storage";
 
 const Topnav = () => {
   const { showLogoutBtn } = useSelector((state) => state.slug);
-  const user = getSessionStorageItem("user");
+  const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     clearSessionStorage();
-    dispatch(toggleShowLogoutBtn())
-    flash('warning', 'Logged out successfully')
-    navigate('/login')
+    dispatch(toggleShowLogoutBtn());
+    flash("warning", "Logged out successfully");
+    navigate("/login");
   };
 
   return (
@@ -47,7 +45,7 @@ const Topnav = () => {
             <FaUserCircle />
           </span>
           <span className="capitalize tracking-wider">
-            {user ? user.user.name : "Test User"}
+            {user ? user.name : "Test User"}
           </span>
           <span>
             {" "}

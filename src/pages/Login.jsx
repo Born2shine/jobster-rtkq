@@ -7,18 +7,23 @@ import { useLoginMutation } from "../services";
 import { loginSchema } from "../utils/schema";
 import { setSessionStorageItem } from "../utils/helpers/storage";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/authSlice";
 
 const Login = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (values, { resetForm }) => {
     await login(values)
       .unwrap()
       .then((payload) => {
-        setSessionStorageItem("user", payload);
-        flash("success", `Welcome back ${payload.user.name}`);
+        const { user } = payload
+        dispatch(setUser(user))
+        setSessionStorageItem("user", user);
+        flash("success", `Welcome back ${user.name}`);
         navigate("/dashboard");
       })
       .catch((error) => error.data && flash("error", error.data.msg));

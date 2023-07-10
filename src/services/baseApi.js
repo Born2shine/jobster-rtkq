@@ -10,7 +10,7 @@ export const baseApi = createApi({
             let token
             const user = getSessionStorageItem('user')
             if (user) {
-                token = user.user.token
+                token = user.token
             }
             headers.set('authorization', `Bearer ${token ? token : ''}`)
             return headers

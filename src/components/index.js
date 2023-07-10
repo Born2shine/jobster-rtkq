@@ -6,6 +6,7 @@ import { default as Stats } from "./metrics/Stats";
 import { default as Barchart } from "./charts/Barchart";
 import { default as HeroContainer } from "./wrapper/HeroContainer";
 import { default as PaginateBtn } from "./pagination/PaginateBtn";
+import { default as ProtectedRoute } from "./auth/ProtectedRoute";
 import { PrevIcon, NextIcon } from "./icons";
 
 export {
@@ -18,5 +19,6 @@ export {
     HeroContainer,
     PrevIcon,
     NextIcon,
-    PaginateBtn
+    PaginateBtn,
+    ProtectedRoute
 }
