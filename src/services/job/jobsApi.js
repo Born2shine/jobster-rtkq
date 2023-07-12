@@ -7,10 +7,23 @@ export const jobsApi = baseApi.injectEndpoints({
     getAllJobs: builder.query({
       query: ({ status, jobType, sort, page }) =>
         `/jobs?status=${status}&jobType=${jobType}&sort=${sort}&page=${page}`,
-        invalidatesTags: ['job']
+        providesTags: ['job']
+    }),   
+    addJob: builder.mutation({
+      query: (job) => ({
+        url: '/jobs',
+        method: 'POST',
+        body: job
+      }),
+      invalidatesTags: ['job']
+    }),
+    getJobStats: builder.query({
+      query: () =>
+        `/jobs/stats`,
+        providesTags: ['job']
     }),
   }),
   // overrideExisting: false,
 });
 
-export const { useGetAllJobsQuery } = jobsApi;
+export const { useGetAllJobsQuery, useAddJobMutation, useGetJobStatsQuery } = jobsApi;

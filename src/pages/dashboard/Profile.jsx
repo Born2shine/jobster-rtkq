@@ -6,7 +6,7 @@ import { updateProfileSchema } from "../../utils/schema";
 import { useDispatch, useSelector } from "react-redux";
 import { setSessionStorageItem } from "../../utils/helpers/storage";
 import { flashMessage as flash } from "../../utils/helpers/flashMessage";
-import { setUser } from "../../features/authSlice";
+import { setUser } from "../../features/auth/authSlice";
 
 const Profile = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();

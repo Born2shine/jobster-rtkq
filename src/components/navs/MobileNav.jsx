@@ -2,7 +2,7 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown, FaTimes } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 import { LOGO } from '../../assets';
 import links from '../../utils/data/links';
-import { toggleNavbar } from '../../features/slugSlice';
+import { toggleNavbar } from '../../features/slug/slugSlice';
 import { useDispatch } from 'react-redux';
 import { useWindowSize } from '@react-hookz/web';
 

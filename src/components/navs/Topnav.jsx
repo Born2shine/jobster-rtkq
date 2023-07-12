@@ -1,13 +1,11 @@
 import React from "react";
-import { FaAlignLeft, FaCaretDown, FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGO } from "../../assets";
-import { toggleNavbar, toggleShowLogoutBtn } from "../../features/slugSlice";
+import { logoutUser } from "../../features/auth/authSlice";
+import { toggleNavbar, toggleShowLogoutBtn } from "../../features/slug/slugSlice";
 import { flashMessage as flash } from "../../utils/helpers/flashMessage";
-import {
-  clearSessionStorage
-} from "../../utils/helpers/storage";
+import { FaAlignLeft, FaCaretDown, FaUserCircle } from "../icons";
 
 const Topnav = () => {
   const { showLogoutBtn } = useSelector((state) => state.slug);
@@ -17,10 +15,11 @@ const Topnav = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    clearSessionStorage();
+    dispatch(logoutUser())
     dispatch(toggleShowLogoutBtn());
-    flash("warning", "Logged out successfully");
     navigate("/login");
+    flash("warning", "Logged out successfully");
+    // clearSessionStorage();
   };
 
   return (

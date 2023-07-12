@@ -2,12 +2,22 @@ import React from "react";
 import { HeroContainer } from "../../components";
 import { useFormik } from "formik";
 import { addJobSchema } from "../../utils/schema";
+import { useSelector } from "react-redux";
+import { useAddJobMutation } from "../../services";
+import { flashMessage as flash } from "../../utils/helpers/flashMessage";
 
 const AddJob = () => {
+  const { jobTypeOptions, statusOptions, status, jobType } = useSelector((state) => state.job)
+  const [addJob, { isLoading }] = useAddJobMutation()
 
-  const handleAddJob = (values, {resetForm}) => {
-    console.log(values)
-    resetForm()
+  const handleAddJob = async (values, { resetForm }) => {
+    await addJob(values)
+    .unwrap()
+    .then((payload) => {
+      flash('success', 'Job added successfully')
+      // resetForm()
+    })
+    .catch((error) => error.data && flash("error", error.data.msg));
   }
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -15,9 +25,9 @@ const AddJob = () => {
       initialValues: {
         position: "",
         company: "",
-        job_location: "",
-        status: "",
-        job_type: "",
+        jobLocation: "",
+        status: status || '',
+        jobType: jobType || '',
       },
       validationSchema: addJobSchema,
       onSubmit: handleAddJob
@@ -46,7 +56,7 @@ const AddJob = () => {
                   ${errors.position && touched.position && 'border-red-500'}
                   `}
                 />
-                { errors.position && touched.position && <span className="text-red-500 text-xs">{errors.position}</span>}
+                {errors.position && touched.position && <span className="text-red-500 text-xs">{errors.position}</span>}
               </div>
               <div>
                 <label
@@ -63,24 +73,24 @@ const AddJob = () => {
                   value={values.company}
                   className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]"
                 />
-                { errors.company && touched.company && <span className="text-red-500 text-xs">{errors.company}</span>}
+                {errors.company && touched.company && <span className="text-red-500 text-xs">{errors.company}</span>}
               </div>
               <div>
                 <label
-                  htmlFor="job_location"
+                  htmlFor="jobLocation"
                   className="text-gray-800 tracking-wider block"
                 >
                   Job Location
                 </label>
                 <input
                   type="text"
-                  name="job_location"
+                  name="jobLocation"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.job_location}
+                  value={values.jobLocation}
                   className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]"
                 />
-                { errors.job_location && touched.job_location && <span className="text-red-500 text-xs">{errors.job_location}</span>}
+                {errors.jobLocation && touched.jobLocation && <span className="text-red-500 text-xs">{errors.jobLocation}</span>}
               </div>
               <div className="">
                 <label
@@ -94,13 +104,15 @@ const AddJob = () => {
                   name="status"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.status}
+                // value={values.status}
                 >
-                  <option value="interview">interview</option>
-                  <option value="declined">declined</option>
-                  <option value="pending">pending</option>
+                  {
+                    statusOptions?.map((item) => (
+                      <option selected={status} value={item} key={item} >{item}</option>
+                    ))
+                  }
                 </select>
-                { errors.status && touched.status && <span className="text-red-500 text-xs">{errors.status}</span>}
+                {errors.status && touched.status && <span className="text-red-500 text-xs">{errors.status}</span>}
               </div>
               <div className="">
                 <label
@@ -111,17 +123,16 @@ const AddJob = () => {
                 </label>
                 <select
                   className="bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.47rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]"
-                  name="job_type"
+                  name="jobType"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.job_type}
+                  value={values.jobType}
                 >
-                  <option value="interview">full-time</option>
-                  <option value="part-time">part-time</option>
-                  <option value="remote">remote</option>
-                  <option value="internship">internship</option>
+                  {jobTypeOptions?.map((item) => (
+                    <option key={item} selected={jobType} value={item}>{item}</option>
+                  ))}
                 </select>
-                { errors.job_type && touched.job_type && <span className="text-red-500 text-xs">{errors.job_type}</span>}
+                {errors.jobType && touched.jobType && <span className="text-red-500 text-xs">{errors.jobType}</span>}
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4 md:mt-0">
                 <button
@@ -130,8 +141,10 @@ const AddJob = () => {
                 >
                   Clear
                 </button>
-                <button className="p-[0.28rem] w-full h-fit text-isWhite bg-primary500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-primary800 hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
-                  Submit
+                <button 
+                  disabled={isLoading}
+                  className="p-[0.28rem] w-full h-fit text-isWhite bg-primary500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-primary800 hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
+                  {isLoading ? 'Loading...' : 'Submit'}
                 </button>
               </div>
             </div>

@@ -6,7 +6,7 @@ import { flashMessage as flash } from "../utils/helpers/flashMessage";
 import { registerSchema } from "../utils/schema";
 import { setSessionStorageItem } from "./../utils/helpers/storage";
 import { useDispatch } from "react-redux";
-import { setUser } from "../features/authSlice";
+import { setUser } from "../features/auth/authSlice";
 
 const Register = () => {
   const [registerUser, { isLoading }] = useRegisterUserMutation();

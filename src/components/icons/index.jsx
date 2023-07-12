@@ -1,4 +1,6 @@
-export const PrevIcon = () => (
+import { FaAlignLeft, FaCaretDown, FaUserCircle } from "react-icons/fa";
+
+const PrevIcon = () => (
   <svg
     stroke="currentColor"
     fill="currentColor"
@@ -15,7 +17,7 @@ export const PrevIcon = () => (
     ></path>
   </svg>
 );
-export const NextIcon = () => (
+const NextIcon = () => (
   <svg
     stroke="currentColor"
     fill="currentColor"
@@ -37,3 +39,12 @@ export const NextIcon = () => (
     />
   </svg>
 );
+
+
+export {
+  PrevIcon,
+  NextIcon,
+  FaAlignLeft,
+  FaCaretDown,
+  FaUserCircle
+}

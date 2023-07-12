@@ -1,9 +1,10 @@
 import { Barchart, Stats } from "../../components";
-import { useGetAllJobsQuery } from "../../services";
+import { useGetAllJobsQuery, useGetJobStatsQuery } from "../../services";
 
 const Dashboard = () => {
   // const { data, error, isError } = useGetAllJobsQuery({status: 'all', jobType: 'all', sort: 'latest', page: 1});
-  // console.log(data)
+  const { data, error, isError } = useGetJobStatsQuery();
+  console.log(data)
 
   return (
     <section>

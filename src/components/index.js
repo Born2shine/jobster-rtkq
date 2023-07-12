@@ -7,6 +7,7 @@ import { default as Barchart } from "./charts/Barchart";
 import { default as HeroContainer } from "./wrapper/HeroContainer";
 import { default as PaginateBtn } from "./pagination/PaginateBtn";
 import { default as ProtectedRoute } from "./auth/ProtectedRoute";
+import { default as RedirectAuthenticated } from "./auth/RedirectAuthenticated";
 import { PrevIcon, NextIcon } from "./icons";
 
 export {
@@ -20,5 +21,6 @@ export {
     PrevIcon,
     NextIcon,
     PaginateBtn,
-    ProtectedRoute
+    ProtectedRoute,
+    RedirectAuthenticated
 }

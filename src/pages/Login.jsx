@@ -8,13 +8,14 @@ import { loginSchema } from "../utils/schema";
 import { setSessionStorageItem } from "../utils/helpers/storage";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { setUser } from "../features/authSlice";
+import { setUser } from "../features/auth/authSlice";
 
 const Login = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
 
   const loginHandler = async (user) => {
     await login(user)
@@ -63,6 +64,7 @@ const Login = () => {
               value={values.email}
               onBlur={handleBlur}
               onChange={handleChange}
+              autoComplete="on"
               className={`bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]
                             ${errors.email && touched.email && "border-red-500"}
                             `}
@@ -87,6 +89,7 @@ const Login = () => {
                 value={values.password}
                 onBlur={handleBlur}
                 onChange={handleChange}
+                autoComplete="off"
                 className={`bg-isGrey50 border border-isGrey200 rounded-r25 pl-3 p-[0.18rem] mt-1 w-full focus:outline-none focus:border-gray-700 focus:border-[1.5px]
                   ${errors.password && touched.password && "border-red-500"}
                   `}

@@ -14,9 +14,9 @@ export const loginSchema = yup.object().shape({
 export const addJobSchema = yup.object().shape({
     position: yup.string().required(),
     company: yup.string().required(),
-    job_location: yup.string().required('job location is a required field'),
+    jobLocation: yup.string().required('job location is a required field'),
     status: yup.string().required(),
-    job_type: yup.string().required('job type is a required field')
+    jobType: yup.string().required('job type is a required field')
 })
 export const updateProfileSchema = yup.object().shape({
     name: yup.string().required(),
