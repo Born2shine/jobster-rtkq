@@ -1,10 +1,12 @@
 import React from 'react'
-import defaultStats from '../../utils/data/stats'
+import defaultStats, { getDefaultStats } from '../../utils/data/stats'
 
 const Stats = () => {
+  const statsData = getDefaultStats()
+
   return (
 	<div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-4">
-              {defaultStats.map(({ title, count, color, icon, bcg }) => (
+              {statsData.map(({ title, count, color, icon, bcg }) => (
                 <div
                   key={title}
                   className={`bg-isWhite px-8 pt-12 pb-7 rounded-r25 border-b-[5px]`}

@@ -9,18 +9,20 @@ const initialState = {
     jobType: "full-time",
     jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
     isEditing: false,
-    editJobId: ''
+    editJobId: '',
+    stats: null
 }
 
 export const jobSlice = createSlice({
     name: 'job',
     initialState,
     reducers: {
-        resetAddJob: (state) => {
-
-        }
+        resetAddJob: (state) => {},
+        setStats: (state, {payload}) => {
+            state.stats = payload
+        },
     }
 })
 
-export const { resetAddJob } = jobSlice.actions
+export const { resetAddJob, setStats } = jobSlice.actions
 export default jobSlice.reducer

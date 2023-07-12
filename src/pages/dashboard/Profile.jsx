@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSessionStorageItem } from "../../utils/helpers/storage";
 import { flashMessage as flash } from "../../utils/helpers/flashMessage";
 import { setUser } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
@@ -21,7 +22,7 @@ const Profile = () => {
         const { user } = payload
         dispatch(setUser(user))
         setSessionStorageItem("user", user);
-        flash("success", `Profile updated successfully`);
+        flash('success','Profile updated successfully');
     })
     .catch((error) => error.data && flash("error", error.data.msg))
   };

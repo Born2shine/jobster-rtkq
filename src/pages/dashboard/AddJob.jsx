@@ -8,24 +8,27 @@ import { flashMessage as flash } from "../../utils/helpers/flashMessage";
 
 const AddJob = () => {
   const { jobTypeOptions, statusOptions, status, jobType } = useSelector((state) => state.job)
+  const { user } = useSelector((state) => state.auth)
   const [addJob, { isLoading }] = useAddJobMutation()
+
+  console.log(user)
 
   const handleAddJob = async (values, { resetForm }) => {
     await addJob(values)
     .unwrap()
     .then((payload) => {
       flash('success', 'Job added successfully')
-      // resetForm()
+      resetForm()
     })
     .catch((error) => error.data && flash("error", error.data.msg));
   }
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } =
     useFormik({
       initialValues: {
         position: "",
         company: "",
-        jobLocation: "",
+        jobLocation: user.location ? user.location : "",
         status: status || '',
         jobType: jobType || '',
       },
@@ -104,11 +107,11 @@ const AddJob = () => {
                   name="status"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                // value={values.status}
+                  value={status}
                 >
                   {
                     statusOptions?.map((item) => (
-                      <option selected={status} value={item} key={item} >{item}</option>
+                      <option value={item} key={item} >{item}</option>
                     ))
                   }
                 </select>
@@ -126,10 +129,10 @@ const AddJob = () => {
                   name="jobType"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.jobType}
+                  defaultValue={jobType}
                 >
                   {jobTypeOptions?.map((item) => (
-                    <option key={item} selected={jobType} value={item}>{item}</option>
+                    <option key={item} value={item}>{item}</option>
                   ))}
                 </select>
                 {errors.jobType && touched.jobType && <span className="text-red-500 text-xs">{errors.jobType}</span>}
@@ -138,6 +141,10 @@ const AddJob = () => {
                 <button
                   type="submit"
                   className="p-[0.28rem] w-full h-fit text-isWhite bg-gray-500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-gray-800 hover:text-isWhite transition duration-500 ease-in-out md:mt-8"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    resetForm()
+                  }}
                 >
                   Clear
                 </button>
