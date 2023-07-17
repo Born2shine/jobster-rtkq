@@ -16,12 +16,14 @@ const Jobs = ({}) => {
   const bg_pending = `bg-blue-100 text-blue-400`;
   const bg_interview = `bg-orange-100 text-orange-400`;
 
-  console.log(data)
+  console.log(data);
 
   return (
     <>
       {isLoading ? (
-        <h2>Loading...</h2>
+        <div className="w-1/2 h-1/2 m-auto flex justify-center items-center">
+          <div className="w-16 h-16 rounded-full border-4 border-[#ffffffff] border-t-4 border-t-primary700 animate-spin transition-all duration-30"></div>
+        </div>
       ) : (
         isSuccess &&
         data && (
