@@ -1,11 +1,10 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Barchart, Stats } from "../../components";
-import { useGetAllJobsQuery, useGetJobStatsQuery } from "../../services";
 import { setStats } from "../../features/jobs/jobSlice";
-import { useEffect } from "react";
+import { useGetJobStatsQuery } from "../../services";
 
 const Dashboard = () => {
-  // const { data, error, isError } = useGetAllJobsQuery({status: 'all', jobType: 'all', sort: 'latest', page: 1});
   const { data, error, isError, isSuccess, refetch } = useGetJobStatsQuery();
   
   const dispatch = useDispatch();

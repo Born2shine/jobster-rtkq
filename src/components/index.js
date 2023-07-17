@@ -8,6 +8,7 @@ import { default as HeroContainer } from "./wrapper/HeroContainer";
 import { default as PaginateBtn } from "./pagination/PaginateBtn";
 import { default as ProtectedRoute } from "./auth/ProtectedRoute";
 import { default as RedirectAuthenticated } from "./auth/RedirectAuthenticated";
+import { default as Jobs }  from './jobs/Jobs';
 import { PrevIcon, NextIcon } from "./icons";
 
 export {
@@ -22,5 +23,6 @@ export {
     NextIcon,
     PaginateBtn,
     ProtectedRoute,
-    RedirectAuthenticated
+    RedirectAuthenticated,
+    Jobs
 }

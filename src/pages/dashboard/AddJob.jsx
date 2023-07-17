@@ -11,8 +11,6 @@ const AddJob = () => {
   const { user } = useSelector((state) => state.auth)
   const [addJob, { isLoading }] = useAddJobMutation()
 
-  console.log(user)
-
   const handleAddJob = async (values, { resetForm }) => {
     await addJob(values)
     .unwrap()

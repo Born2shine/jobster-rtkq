@@ -1,0 +1,177 @@
+import React, { useEffect } from "react";
+import { useGetAllJobsQuery } from "../../services";
+import { NextIcon, PrevIcon } from "../icons";
+import PaginateBtn from "../pagination/PaginateBtn";
+import Moment from "react-moment";
+
+const Jobs = ({}) => {
+  const { data, error, isError, isLoading, isSuccess, isFetching, refetch } =
+    useGetAllJobsQuery();
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  const bg_declined = `bg-red-100 text-red-400`;
+  const bg_pending = `bg-blue-100 text-blue-400`;
+  const bg_interview = `bg-orange-100 text-orange-400`;
+
+  console.log(data)
+
+  return (
+    <>
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : (
+        isSuccess &&
+        data && (
+          <section className="mt-16 pb-10 md:pb-40">
+            {data.jobs.length === 0 ? (
+              <h3 className="text-gray-800 font-semibold text-3xl tracking-wider mb-5">
+                No Jobs Found
+              </h3>
+            ) : (
+              <>
+                <h3 className="text-gray-800 font-semibold text-xl tracking-wider mb-5">
+                  {data.totalJobs} Jobs Found
+                </h3>
+                <section>
+                  <article className="grid gap-4 md:grid-cols-2">
+                    {data.jobs.map((job, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-isWhite shadow-shadow2 text-gray-600 rounded-r25 pb-4"
+                      >
+                        <div className="pb-4">
+                          <div className="flex items-center gap-8 border-b px-6 py-4">
+                            <span className="p-4 px-6 grid place-content-end w-fit bg-primary500 font-semibold text-isWhite text-2xl rounded-r25">
+                              {job.company.charAt(0)}
+                            </span>
+                            <div>
+                              <h1 className="text-gray-600 text-xl tracking-wide">
+                                {job.position}
+                              </h1>
+                              <span className="text-gray-400 tracking-wider">
+                                {job.company}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="px-6 grid gap-4 pt-5 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                            <div className="flex items-center gap-4">
+                              <span className="text-gray-400">
+                                <svg
+                                  stroke="currentColor"
+                                  fill="currentColor"
+                                  strokeWidth="0"
+                                  viewBox="0 0 512 512"
+                                  height="1em"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
+                                </svg>
+                              </span>
+                              <span className="tracking-wider text-gray-700">
+                                {job.jobLocation}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <span className="text-gray-400">
+                                <svg
+                                  stroke="currentColor"
+                                  fill="currentColor"
+                                  strokeWidth="0"
+                                  viewBox="0 0 512 512"
+                                  height="1em"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
+                                </svg>
+                              </span>
+                              <span className="tracking-wider text-gray-700">
+                                <Moment
+                                  data={data.createdAt}
+                                  format="MMM Do, YYYY"
+                                />
+                              </span>
+                            </div>
+                            <div className="flex flex-col gap-4">
+                              <div className="flex items-center gap-4">
+                                <span className="text-gray-400">
+                                  <svg
+                                    stroke="currentColor"
+                                    fill="currentColor"
+                                    strokeWidth="0"
+                                    viewBox="0 0 512 512"
+                                    height="1em"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
+                                  </svg>
+                                </span>
+                                <span className="tracking-wider text-gray-700 capitalize">
+                                  {job.jobType}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex gap-4">
+                              <span
+                                className={`tracking-wider px-4 rounded-r25 capitalize ${
+                                  job.status === "declined"
+                                    ? bg_declined
+                                    : job.status === "pending"
+                                    ? bg_pending
+                                    : bg_interview
+                                }`}
+                              >
+                                {job.status}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="px-6 pt-1">
+                          <div className="flex gap-2">
+                            <button className="tracking-wider bg-green-200 text-green-800 px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3">
+                              Edit
+                            </button>
+                            <button className="tracking-wider bg-isRedLight text-isRedDark px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3">
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </article>
+                  <div className="mt-16">
+                    <div className="flex flex-col items-end gap-4 lg:flex-row lg:justify-end">
+                      <PaginateBtn title="Prev" icon={<PrevIcon />} />
+                      <div className="bg-primary100 rounded-r25">
+                        <div className="flex text-primary500">
+                          {Array.from({ length: data.numOfPages }, (_, idx) => (
+                            <span
+                              key={idx}
+                              className={`block w-fit font-semibold text-xl py-1.5 px-5 rounded-r25 cursor-pointer ${
+                                idx === 0 && "bg-primary500 text-isWhite"
+                              }`}
+                            >
+                              {idx + 1}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <PaginateBtn title="Next" icon={<NextIcon />} />
+                    </div>
+                  </div>
+                </section>
+              </>
+            )}
+          </section>
+        )
+      )}
+    </>
+  );
+};
+
+export default Jobs;
