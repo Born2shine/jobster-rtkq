@@ -1,26 +1,33 @@
 import React, { useEffect } from "react";
-import { useGetAllJobsQuery } from "../../services";
+import { useDeleteJobMutation, useGetAllJobsQuery } from "../../services";
 import { NextIcon, PrevIcon } from "../icons";
 import PaginateBtn from "../pagination/PaginateBtn";
 import Moment from "react-moment";
+import { declined, interview, pending } from "../../constant";
+import { flashMessage as flash} from "../../utils/helpers/flashMessage";
 
 const Jobs = ({}) => {
   const { data, error, isError, isLoading, isSuccess, isFetching, refetch } =
     useGetAllJobsQuery();
+  const [deleteJob, { isLoading: isDeletingJob, isSuccess: isJobDeleted, data: jobDeletedData }] = useDeleteJobMutation()
+
+  const deleteJobHandler = async (_id) => {
+    await deleteJob(_id)
+    .unwrap()
+    .then((payload) => {
+      refetch();
+      flash('success', payload.msg)
+    })
+    .catch((error) => error.data && flash("error", error.data.msg));
+  }
 
   useEffect(() => {
     refetch();
   }, []);
 
-  const bg_declined = `bg-red-100 text-red-400`;
-  const bg_pending = `bg-blue-100 text-blue-400`;
-  const bg_interview = `bg-orange-100 text-orange-400`;
-
-  console.log(data);
-
   return (
     <>
-      {isLoading ? (
+      {isLoading || isDeletingJob ? (
         <div className="w-1/2 h-1/2 m-auto flex justify-center items-center">
           <div className="w-16 h-16 rounded-full border-4 border-[#ffffffff] border-t-4 border-t-primary700 animate-spin transition-all duration-30"></div>
         </div>
@@ -41,7 +48,7 @@ const Jobs = ({}) => {
                   <article className="grid gap-4 md:grid-cols-2">
                     {data.jobs.map((job, idx) => (
                       <div
-                        key={idx}
+                        key={job._id}
                         className="bg-isWhite shadow-shadow2 text-gray-600 rounded-r25 pb-4"
                       >
                         <div className="pb-4">
@@ -122,10 +129,10 @@ const Jobs = ({}) => {
                               <span
                                 className={`tracking-wider px-4 rounded-r25 capitalize ${
                                   job.status === "declined"
-                                    ? bg_declined
+                                    ? declined
                                     : job.status === "pending"
-                                    ? bg_pending
-                                    : bg_interview
+                                    ? pending
+                                    : interview
                                 }`}
                               >
                                 {job.status}
@@ -138,7 +145,10 @@ const Jobs = ({}) => {
                             <button className="tracking-wider bg-green-200 text-green-800 px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3">
                               Edit
                             </button>
-                            <button className="tracking-wider bg-isRedLight text-isRedDark px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3">
+                            <button className="tracking-wider bg-isRedLight text-isRedDark px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3"
+                            disabled={isDeletingJob}
+                            onClick={() => deleteJobHandler(job._id)}
+                            >
                               Delete
                             </button>
                           </div>

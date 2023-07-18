@@ -27,8 +27,15 @@ export const jobsApi = baseApi.injectEndpoints({
         `/jobs?status=${status}&jobType=${jobType}&sort=${sort}&page=${page}`,
         providesTags: ['job']
     }),
+    deleteJob: builder.mutation({
+      query: (_id) => ({
+        url:`/jobs/${_id}`,
+        method:'DELETE',
+      }),
+      invalidateTags:['job']
+    })
   }),
   // overrideExisting: false,
 });
 
-export const { useGetAllJobsQuery, useAddJobMutation, useGetJobStatsQuery, useGetJobsBySlugQuery } = jobsApi;
+export const { useGetAllJobsQuery, useAddJobMutation, useGetJobStatsQuery, useGetJobsBySlugQuery, useDeleteJobMutation } = jobsApi;
