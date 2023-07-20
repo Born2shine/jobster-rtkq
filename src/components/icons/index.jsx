@@ -1,4 +1,4 @@
-import { FaAlignLeft, FaCaretDown, FaUserCircle } from "react-icons/fa";
+import { FaAlignLeft, FaCaretDown, FaUserCircle, FaLocationArrow, FaCalendarAlt } from "react-icons/fa";
 
 const PrevIcon = () => (
   <svg
@@ -46,5 +46,7 @@ export {
   NextIcon,
   FaAlignLeft,
   FaCaretDown,
-  FaUserCircle
+  FaUserCircle,
+  FaLocationArrow,
+  FaCalendarAlt
 }

@@ -29,4 +29,8 @@ export const flashMessage = (type, message) => {
 
 }
 
+export const throwError = (error) => {
+    return error.data && flashMessage("error", error.data.msg)
+}
+
 // export default flashMessage

@@ -2,41 +2,61 @@ import React from "react";
 import { HeroContainer } from "../../components";
 import { useFormik } from "formik";
 import { addJobSchema } from "../../utils/schema";
-import { useSelector } from "react-redux";
-import { useAddJobMutation } from "../../services";
-import { flashMessage as flash } from "../../utils/helpers/flashMessage";
+import { useDispatch, useSelector } from "react-redux";
+import { useAddJobMutation, useUpdateJobMutation } from "../../services";
+import { flashMessage as flash, throwError } from "../../utils/helpers/flashMessage";
+import { resetAddJob } from "../../features/jobs/jobSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddJob = () => {
-  const { jobTypeOptions, statusOptions, status, jobType } = useSelector((state) => state.job)
+  const { jobTypeOptions, statusOptions, status, jobType, jobLocation, isEditing, position, company, editJobId } = useSelector((state) => state.job)
   const { user } = useSelector((state) => state.auth)
   const [addJob, { isLoading }] = useAddJobMutation()
+  const [updateJob, { isLoading: isUpdatingJob }] = useUpdateJobMutation()
+
+  const dispatch  = useDispatch()
+  const navigate  = useNavigate()
 
   const handleAddJob = async (values, { resetForm }) => {
     await addJob(values)
+      .unwrap()
+      .then((payload) => {
+        flash('success', 'Job added successfully')
+        resetForm()
+      })
+      .catch((error) => throwError(error));
+  }
+
+  const handleEditJob = async (values, { resetForm }) => {
+    const payload = { ...values, editJobId }
+    await updateJob(payload)
     .unwrap()
     .then((payload) => {
-      flash('success', 'Job added successfully')
+      flash('success', 'Job updated successfully')
       resetForm()
+      dispatch(resetAddJob())
+      navigate('/all-jobs')
+
     })
-    .catch((error) => error.data && flash("error", error.data.msg));
+    .catch((error) => throwError(error));
   }
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } =
     useFormik({
       initialValues: {
-        position: "",
-        company: "",
-        jobLocation: user.location ? user.location : "",
+        position: isEditing ? position : "",
+        company: isEditing ? company : "",
+        jobLocation: isEditing ? jobLocation : (user.location ? user.location : ""),
         status: status || '',
         jobType: jobType || '',
       },
       validationSchema: addJobSchema,
-      onSubmit: handleAddJob
+      onSubmit: isEditing ? handleEditJob : handleAddJob
     });
 
   return (
     <section className="h-screen">
-      <HeroContainer title="Add Job">
+      <HeroContainer title={isEditing ? 'Edit Job' : "Add Job"}>
         <section className="mt-5">
           <form onSubmit={handleSubmit}>
             <div className="grid gap-y-3.5 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
@@ -146,10 +166,10 @@ const AddJob = () => {
                 >
                   Clear
                 </button>
-                <button 
+                <button
                   disabled={isLoading}
                   className="p-[0.28rem] w-full h-fit text-isWhite bg-primary500 rounded-r25 shadow-shadow3 tracking-wider hover:bg-primary800 hover:text-isWhite transition duration-500 ease-in-out md:mt-8">
-                  {isLoading ? 'Loading...' : 'Submit'}
+                  {isLoading || isUpdatingJob ? 'Loading...' : (isEditing ? 'Update' : 'Submit')}
                 </button>
               </div>
             </div>

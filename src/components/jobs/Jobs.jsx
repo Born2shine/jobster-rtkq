@@ -1,16 +1,29 @@
 import React, { useEffect } from "react";
 import { useDeleteJobMutation, useGetAllJobsQuery } from "../../services";
-import { NextIcon, PrevIcon } from "../icons";
+import { FaCalendarAlt, FaLocationArrow, NextIcon, PrevIcon } from "../icons";
 import PaginateBtn from "../pagination/PaginateBtn";
 import Moment from "react-moment";
 import { declined, interview, pending } from "../../constant";
-import { flashMessage as flash} from "../../utils/helpers/flashMessage";
+import { flashMessage as flash, throwError} from "../../utils/helpers/flashMessage";
+import { resetAddJob, setEditingJob } from "../../features/jobs/jobSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Jobs = ({}) => {
   const { data, error, isError, isLoading, isSuccess, isFetching, refetch } =
     useGetAllJobsQuery();
   const [deleteJob, { isLoading: isDeletingJob, isSuccess: isJobDeleted, data: jobDeletedData }] = useDeleteJobMutation()
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  // set job edit data and navigate to edit job page
+  const editJobhandler = (payload) => {
+    dispatch(setEditingJob(payload))
+    navigate('/add-job')
+  }
+
+  // delete single job
   const deleteJobHandler = async (_id) => {
     await deleteJob(_id)
     .unwrap()
@@ -18,11 +31,13 @@ const Jobs = ({}) => {
       refetch();
       flash('success', payload.msg)
     })
-    .catch((error) => error.data && flash("error", error.data.msg));
+    .catch((error) => throwError(error));
   }
 
+  // fetch jobs on component mounted
   useEffect(() => {
     refetch();
+    dispatch(resetAddJob())
   }, []);
 
   return (
@@ -68,17 +83,7 @@ const Jobs = ({}) => {
                           <div className="px-6 grid gap-4 pt-5 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                             <div className="flex items-center gap-4">
                               <span className="text-gray-400">
-                                <svg
-                                  stroke="currentColor"
-                                  fill="currentColor"
-                                  strokeWidth="0"
-                                  viewBox="0 0 512 512"
-                                  height="1em"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
-                                </svg>
+                                <FaLocationArrow/>
                               </span>
                               <span className="tracking-wider text-gray-700">
                                 {job.jobLocation}
@@ -86,17 +91,7 @@ const Jobs = ({}) => {
                             </div>
                             <div className="flex items-center gap-4">
                               <span className="text-gray-400">
-                                <svg
-                                  stroke="currentColor"
-                                  fill="currentColor"
-                                  strokeWidth="0"
-                                  viewBox="0 0 512 512"
-                                  height="1em"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
-                                </svg>
+                                <FaCalendarAlt/>
                               </span>
                               <span className="tracking-wider text-gray-700">
                                 <Moment
@@ -142,7 +137,8 @@ const Jobs = ({}) => {
                         </div>
                         <div className="px-6 pt-1">
                           <div className="flex gap-2">
-                            <button className="tracking-wider bg-green-200 text-green-800 px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3">
+                            <button className="tracking-wider bg-green-200 text-green-800 px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3"
+                            onClick={() => editJobhandler(job)}>
                               Edit
                             </button>
                             <button className="tracking-wider bg-isRedLight text-isRedDark px-3 rounded-r25 shadow-shadow2 hover:shadow-shadow3"

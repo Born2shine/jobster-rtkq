@@ -1,4 +1,4 @@
-import { jobsApi, useGetAllJobsQuery, useAddJobMutation, useGetJobStatsQuery, useDeleteJobMutation } from "./job/jobsApi";
+import { jobsApi, useGetAllJobsQuery, useAddJobMutation, useGetJobStatsQuery, useDeleteJobMutation, useUpdateJobMutation } from "./job/jobsApi";
 import {
   authApi,
   useRegisterUserMutation,
@@ -15,5 +15,6 @@ export {
   useUpdateProfileMutation,
   useAddJobMutation,
   useGetJobStatsQuery,
-  useDeleteJobMutation
+  useDeleteJobMutation,
+  useUpdateJobMutation
 };

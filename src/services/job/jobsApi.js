@@ -7,8 +7,8 @@ export const jobsApi = baseApi.injectEndpoints({
     getAllJobs: builder.query({
       query: () =>
         `/jobs`,
-        providesTags: ['job']
-    }),   
+      providesTags: ['job']
+    }),
     addJob: builder.mutation({
       query: (job) => ({
         url: '/jobs',
@@ -20,22 +20,29 @@ export const jobsApi = baseApi.injectEndpoints({
     getJobStats: builder.query({
       query: () =>
         `/jobs/stats`,
-        providesTags: ['job']
+      providesTags: ['job']
     }),
     getJobsBySlug: builder.query({
       query: ({ status, jobType, sort, page }) =>
         `/jobs?status=${status}&jobType=${jobType}&sort=${sort}&page=${page}`,
-        providesTags: ['job']
+      providesTags: ['job']
     }),
     deleteJob: builder.mutation({
       query: (_id) => ({
-        url:`/jobs/${_id}`,
-        method:'DELETE',
+        url: `/jobs/${_id}`,
+        method: 'DELETE',
       }),
-      invalidateTags:['job']
+      invalidateTags: ['job']
+    }),
+    updateJob: builder.mutation({
+      query: ({editJobId, ...rest}) => ({
+        url: `/jobs/${editJobId}`,
+        method: 'PATCH',
+        body: rest
+      })
     })
   }),
   // overrideExisting: false,
 });
 
-export const { useGetAllJobsQuery, useAddJobMutation, useGetJobStatsQuery, useGetJobsBySlugQuery, useDeleteJobMutation } = jobsApi;
+export const { useGetAllJobsQuery, useAddJobMutation, useGetJobStatsQuery, useGetJobsBySlugQuery, useDeleteJobMutation, useUpdateJobMutation } = jobsApi;
